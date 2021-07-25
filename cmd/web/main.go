@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Yapcheekian/web-golang/pkg/config"
-	"github.com/Yapcheekian/web-golang/pkg/handlers"
-	"github.com/Yapcheekian/web-golang/pkg/render"
+	"github.com/Yapcheekian/web-golang/internal/config"
+	"github.com/Yapcheekian/web-golang/internal/handlers"
+	"github.com/Yapcheekian/web-golang/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 

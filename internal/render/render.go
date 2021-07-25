@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/Yapcheekian/web-golang/pkg/config"
-	"github.com/Yapcheekian/web-golang/pkg/models"
+	"github.com/Yapcheekian/web-golang/internal/config"
+	"github.com/Yapcheekian/web-golang/internal/models"
 	"github.com/justinas/nosurf"
 )
 
