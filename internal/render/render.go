@@ -2,10 +2,11 @@ package render
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"path/filepath"
+	"testing"
 	"text/template"
 
 	"github.com/Yapcheekian/web-golang/internal/config"
@@ -31,7 +32,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
 
 	if app.UseCache {
@@ -43,7 +44,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 	t, ok := tc[tmpl]
 
 	if !ok {
-		log.Fatal("not ok")
+		return errors.New("Can't get template from cache")
 	}
 
 	buf := new(bytes.Buffer)
@@ -56,7 +57,10 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 
 	if err != nil {
 		fmt.Println("Error writing to browser:", err)
+		return err
 	}
+
+	return nil
 }
 
 func CreateTemplateCache() (map[string]*template.Template, error) {
@@ -93,4 +97,18 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 		myCache[name] = ts
 	}
 	return myCache, nil
+}
+
+func TestNewTemplate(t *testing.T) {
+	NewTemplate(app)
+}
+
+func TestCreateTemplateCache(t *testing.T) {
+	pathToTemplates = "./../../templates"
+
+	_, err := CreateTemplateCache()
+
+	if err != nil {
+		t.Error(err)
+	}
 }
