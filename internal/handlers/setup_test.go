@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"text/template"
 	"time"
@@ -25,6 +26,12 @@ var functions = template.FuncMap{}
 
 func getRoutes() http.Handler {
 	gob.Register(models.Reservation{})
+
+	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
+	app.InfoLog = infoLog
+	app.ErrorLog = errorLog
 	app.IsProduction = false
 
 	session = scs.New()

@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Yapcheekian/web-golang/internal/config"
 	"github.com/Yapcheekian/web-golang/internal/handlers"
+	"github.com/Yapcheekian/web-golang/internal/helpers"
 	"github.com/Yapcheekian/web-golang/internal/models"
 	"github.com/Yapcheekian/web-golang/internal/render"
 	"github.com/alexedwards/scs/v2"
@@ -16,8 +18,12 @@ import (
 
 const portNumber = ":8080"
 
-var app config.AppConfig
-var session *scs.SessionManager
+var (
+	app      config.AppConfig
+	session  *scs.SessionManager
+	infoLog  *log.Logger
+	errorLog *log.Logger
+)
 
 func main() {
 	err := run()
@@ -37,6 +43,13 @@ func main() {
 
 func run() error {
 	gob.Register(models.Reservation{})
+
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
+	app.InfoLog = infoLog
+	app.ErrorLog = errorLog
+
 	app.IsProduction = false
 
 	session = scs.New()
@@ -59,6 +72,7 @@ func run() error {
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
 	render.NewTemplate(&app)
+	helpers.New(&app)
 
 	return nil
 }
