@@ -22,8 +22,8 @@ func TestMain(m *testing.M) {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	app.InfoLog = infoLog
-	app.ErrorLog = errorLog
+	testApp.InfoLog = infoLog
+	testApp.ErrorLog = errorLog
 
 	testApp.IsProduction = false
 
