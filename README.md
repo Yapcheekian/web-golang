@@ -3,3 +3,4 @@
 - Use [chi router](https://github.com/go-chi/chi)
 - Use [scs session managemenet](https://github.com/alexedwards/scs)
 - Use [nosurf](https://github.com/justinas/nosurf) for CSRF protection
+- Use [pgx] (https://github.com/jackc/pgx)
