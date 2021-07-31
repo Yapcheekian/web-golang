@@ -13,7 +13,7 @@ type DB struct {
 	SQL *sql.DB
 }
 
-var dbConn *DB
+var dbConn = &DB{}
 
 const maxOpenDbConn = 10
 const maxIdleDbConn = 5

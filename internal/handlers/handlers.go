@@ -6,21 +6,26 @@ import (
 	"net/http"
 
 	"github.com/Yapcheekian/web-golang/internal/config"
+	"github.com/Yapcheekian/web-golang/internal/driver"
 	"github.com/Yapcheekian/web-golang/internal/forms"
 	"github.com/Yapcheekian/web-golang/internal/helpers"
 	"github.com/Yapcheekian/web-golang/internal/models"
 	"github.com/Yapcheekian/web-golang/internal/render"
+	"github.com/Yapcheekian/web-golang/internal/repository"
+	"github.com/Yapcheekian/web-golang/internal/repository/dbrepo"
 )
 
 var Repo *Repository
 
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
