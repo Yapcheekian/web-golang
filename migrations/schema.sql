@@ -105,7 +105,7 @@ ALTER SEQUENCE public.restrictions_id_seq OWNED BY public.restrictions.id;
 CREATE TABLE public.room_restrictions (
     id integer NOT NULL,
     room_id integer NOT NULL,
-    reservation_id integer NOT NULL,
+    reservation_id integer,
     restriction_id integer NOT NULL,
     start_date date NOT NULL,
     end_date date NOT NULL,
