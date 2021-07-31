@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"path/filepath"
-	"testing"
 	"text/template"
 
 	"github.com/Yapcheekian/web-golang/internal/config"
@@ -20,7 +19,7 @@ var app *config.AppConfig
 
 var pathToTemplates = "./templates"
 
-func NewTemplate(a *config.AppConfig) {
+func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 
@@ -32,7 +31,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
+func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
 
 	if app.UseCache {
@@ -97,18 +96,4 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 		myCache[name] = ts
 	}
 	return myCache, nil
-}
-
-func TestNewTemplate(t *testing.T) {
-	NewTemplate(app)
-}
-
-func TestCreateTemplateCache(t *testing.T) {
-	pathToTemplates = "./../../templates"
-
-	_, err := CreateTemplateCache()
-
-	if err != nil {
-		t.Error(err)
-	}
 }
